@@ -14,16 +14,27 @@ class ReadCsv{
 
 public:
 
-  ReadCsv()
-  {
-  }
+  ReadCsv(){}
   ~ReadCsv(){}
 
-  std::vector<std::pair<std::string, std::vector<double>>> readFile (std::string filename, int MaxIndex){
+  void readRows(std::string filename){
+
+    cout << "Called" << endl;
+  }
+
+  /**
+   * Reads the Columns of the file in a vector of pair containing column name , column values.
+   *
+   * @param values File name whose values are read.
+   * @param values Maximum Column Index till data are read.
+   * @return Vector of `pairs <string, vector>`.
+   */
+
+  std::vector<std::pair<std::string, std::vector<double>>> readColumns (std::string filename, int MaxIndex){
     /** Reads a CSV file into a vector of <string, vector<double>> pairs where
      each pair represents <column name, column values>*/
 
-    if(MaxIndex <= 0.0) throw std::runtime_error("[CSV] Nr of Colums should be more than Zero !");
+    if(MaxIndex <= 0.0) throw std::runtime_error("[CSV] Nr of Columns should be more than Zero !");
 
     // Create a vector of <string, double vector> pairs to store the result
     std::vector<std::pair<std::string, std::vector<double>>> result;
@@ -77,6 +88,11 @@ public:
     return result;
   }
 
+  /**
+   * Plots the Columns values of the file using matplotlibcpp.
+   * @param Vector of `pairs <string, vector>`
+   */
+
   void plotData( std::vector<std::pair<std::string, std::vector<double>>> output ){
 
     for(const auto& it : output)
@@ -102,8 +118,9 @@ public:
 int main()
 {
   ReadCsv Obj;
-  std::vector<std::pair<std::string, std::vector<double>>> output = Obj.readFile("/home/mujib/Desktop/experiment1.csv", 2);
+  std::vector<std::pair<std::string, std::vector<double>>> output = Obj.readColumns("/home/mujib/Desktop/experiment1.csv", 1);
   Obj.plotData(output);
+  Obj.readRows("/home/mujib/hans/catkin_ws/devel/lib/jointspace/Mytrajectory.txt");
 
   return 0;
 }
